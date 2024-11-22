@@ -1,4 +1,4 @@
-import Photo from "@/components/Photo";
+import Photo from "@/components/ui/Photo";
 import { Button } from "@/components/ui/button";
 import Social from "@/components/ui/Social";
 import Stats from "@/components/ui/Stats";
