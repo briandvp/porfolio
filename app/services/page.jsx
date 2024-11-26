@@ -8,19 +8,19 @@ const services = [
 {
     num: "01",
     title: "Web Development",
-    description: "corte tu mama",
+    description: "...",
     href: "",
 },
 {
     num: "02",
     title: "UI/UX Design",
-    description: "puto el que lea esto",
+    description: "...",
     href: "",
 },
 {
     num: "03",
     title: "Logo Design",
-    description: "viva la libertad carajo",
+    description: "...",
     href: "",
 },
 {
