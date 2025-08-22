@@ -3,16 +3,15 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input"; 
 import { Textarea } from "@/components/ui/textarea";
-
-import { 
-    Select, 
-    SelectContent, 
-    SelectGroup, 
-    SelectItem, 
-    SelectLabel, 
-    SelectTrigger, 
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
     SelectValue,
-} from "@radix-ui/react-select";
+} from "@/components/ui/select";
 
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 
@@ -35,14 +34,17 @@ const info = [
 ];
 
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 const Contact = () => {
-return (
+  const [servicio, setServicio] = useState("");
+  return (
     <motion.section 
-    initial={{ opacity: 0 }} 
+    initial={{ opacity: 0, y: 20 }} 
     animate={{
         opacity: 1,
-        transition: { delay: 2.4, duration: 0.4, ease: "easeIn" },
+        y: 0,
+        transition: { duration: 0.4, ease: "easeOut" },
     }}
     className="py-6"
 >
@@ -50,55 +52,60 @@ return (
     <div className="flex flex-col xl:flex-row gap-[30px]">
 {/* form */}
     <div className="xl:w-[54%] order-2 xl:order-none">
-    <form className="flex flex-col gap-6 p-10 bg-[#27272c] rounded-xl">
-    <h3 className="text-4xl text-accent">{"Let's work together"}</h3>
-    <p className="text-white/60">sisisisis  nononono</p>
+    <form className="flex flex-col gap-6 p-10 bg-[#23232a] rounded-2xl shadow-2xl border border-[#32323a]/40">
+    <h3 className="text-4xl text-accent font-bold mb-2">{"Let's work together"}</h3>
+    <p className="text-white/70 mb-4">¿Listo para tu próximo proyecto? ¡Contáctame!</p>
     {/* input */}
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <Input type="text" placeholder="Firstname" />
-    <Input type="text" placeholder="Lastname" />
-    <Input type="email" placeholder="Email address" />
-    <Input type="tel" placeholder="Phone number" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Input type="text" placeholder="Nombre" className="rounded-lg bg-[#23232a] border border-[#32323a] focus:ring-2 focus:ring-accent transition-all duration-200" />
+            <Input type="text" placeholder="Apellido" className="rounded-lg bg-[#23232a] border border-[#32323a] focus:ring-2 focus:ring-accent transition-all duration-200" />
+            <Input type="email" placeholder="Correo electrónico" className="rounded-lg bg-[#23232a] border border-[#32323a] focus:ring-2 focus:ring-accent transition-all duration-200" />
+            <Input type="tel" placeholder="Teléfono" className="rounded-lg bg-[#23232a] border border-[#32323a] focus:ring-2 focus:ring-accent transition-all duration-200" />
 </div>
     {/* select */}
-    <Select >
-    <SelectTrigger className="w-full">
-    <SelectValue placeholder="Select a service" />
-    </SelectTrigger>
-    <SelectContent>
-    <SelectGroup >
-        <SelectLabel>Select a service</SelectLabel>
-        <SelectItem value="est">Web Development</SelectItem>
-        <SelectItem value="cst">UI/UX Design</SelectItem>
-        <SelectItem value="mst">Logo Design</SelectItem>
-    </SelectGroup>
-    </SelectContent>
-    </Select>
+        <Select value={servicio} onValueChange={setServicio}>
+            <SelectTrigger className="w-full rounded-lg bg-[#23232a] border border-[#32323a] focus:ring-2 focus:ring-accent transition-all duration-200 text-white">
+                <SelectValue placeholder="Selecciona un servicio" />
+            </SelectTrigger>
+            <SelectContent className="bg-[#23232a] border border-[#32323a] text-white">
+                <SelectGroup>
+                    <SelectLabel className="text-white/70">Selecciona un servicio</SelectLabel>
+                    <SelectItem value="web" className="focus:bg-accent/20 hover:bg-accent/20">Desarrollo Web</SelectItem>
+                    <SelectItem value="ui" className="focus:bg-accent/20 hover:bg-accent/20">UI/UX Design</SelectItem>
+                    <SelectItem value="logo" className="focus:bg-accent/20 hover:bg-accent/20">Logo Design</SelectItem>
+                </SelectGroup>
+            </SelectContent>
+        </Select>
     {/* textarea */}
-    <Textarea
-    className="h-[200px]"
-    placeholder="Type your message here..."
-    />
+        <Textarea
+            className="h-[200px] rounded-lg bg-[#23232a] border border-[#32323a] focus:ring-2 focus:ring-accent transition-all duration-200"
+            placeholder="Escribe tu mensaje aquí..."
+        />
     {/* btn */}
-    <Button size="md" className="max-w-40">Send message</Button>
+    <Button size="md" className="max-w-40 bg-accent hover:bg-accent/80 text-white rounded-lg shadow-lg transition-all duration-200">Enviar mensaje</Button>
     </form>
     </div>
 {/* info */}
 <div className="flex-1 flex items-center xl:justify-end order-1 xl:order-none mb-8 xl:mb-0">
-    <ul>
-    {info.map((item,index)=>{
-        return <li key={index} className="flex items-center gap-6">
-        <div className="w-[52px] h-[52px] xl:h-[72px] bg-[#27272c] text-accent rounded-md flex items-center justify-center">
-            <div className="text-[28px]">{item.icon}</div>
-        </div>
-        <div className="flex-1">
-        <p className="text-white/60">{item.title}</p>
-        <h3 className="text-xl">{item.description}</h3>
-        </div>
-        </li>
-    })}
+    <ul className="space-y-6">
+        {info.map((item, index) => (
+            <motion.li
+                key={index}
+                className="flex items-center gap-6 p-4 rounded-xl bg-[#23232a] shadow-md hover:shadow-xl transition-all duration-200 group"
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.98 }}
+            >
+                <div className="w-[52px] h-[52px] xl:h-[72px] bg-gradient-to-br from-accent/30 to-[#23232a] text-accent rounded-lg flex items-center justify-center shadow group-hover:scale-110 transition-transform duration-200">
+                    <div className="text-[28px]">{item.icon}</div>
+                </div>
+                <div className="flex-1">
+                    <p className="text-white/70 font-medium">{item.title}</p>
+                    <h3 className="text-xl font-bold text-white">{item.description}</h3>
+                </div>
+            </motion.li>
+        ))}
     </ul>
-    </div>
+</div>
 </div>
 </div>
     </motion.section>
