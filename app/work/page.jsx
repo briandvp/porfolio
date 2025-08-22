@@ -62,49 +62,76 @@ const handleSlideChange = (swiper) => {
 };
 
 return <motion.section 
-initial={{opacity: 0}} 
-animate={{
-    opacity: 1,
-    transition:{ delay:2.4, duration: 0.4, ease: "easeIn"},
-}}
-className="min-h-[80vh] flex flex-col justify-center py-12 xl:px-0"
+    initial={{ opacity: 0, y: 20 }} 
+    animate={{
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.4, ease: "easeOut" },
+    }}
+    className="py-12 min-h-screen"
 >
-    <div className="container mx-auto">
-    <div className="flex flex-col xl:flex-row xl:gap-[30px]">
-    <div className="w-full xl:w-[50%] xl:h-[460px] flex flex-col xl:justify-between order-2 xl:order-none">
-        <div className="flex flex-col gap-[30px] h-[50%]">
+    <div className="container mx-auto px-4">
+    <div className="flex flex-col xl:flex-row xl:gap-12">
+    <div className="w-full xl:w-[50%] xl:h-[520px] flex flex-col xl:justify-between order-2 xl:order-none">
+        <div className="flex flex-col gap-8 h-full bg-black/20 backdrop-blur-sm p-8 rounded-2xl">
         {/* outline num */}
-        <div className="text-8xl leading-none font-extrabold text-transparent text-outline">
+        <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-8xl leading-none font-extrabold bg-gradient-to-r from-white/10 to-white/30 bg-clip-text text-transparent"
+        >
             {project.num}
+        </motion.div>
+        <div className="space-y-6">
+        {/* project category & title */}
+        <div className="space-y-2">
+            <motion.span 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-accent text-sm uppercase tracking-wider"
+            >
+                {project.category}
+            </motion.span>
+            <motion.h2 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-4xl lg:text-5xl font-bold text-white"
+            >
+                {project.title}
+            </motion.h2>
         </div>
-        <div>
-        {/* project category */}
-        <h2 className="text-[42px] font-bold leading-none text-white group-hover:text-accent transition-all duration-500 capitalize">
-            {project.category} project
-        </h2>
         {/* project description */}
-        <p className="text-white/60">{project.description}</p>
+        <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-white/70 leading-relaxed"
+        >
+            {project.description}
+        </motion.p>
         {/* Stack */}
-        <ul className="flex gap-4">
+        <motion.ul 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex flex-wrap gap-3"
+        >
         {project.stack.map((item, index) => (
-        <li key={index} className="text-xl text-accent">
-            {item.name}
-            {index !== project.stack.length - 1 && ","}
-        </li>
-        ))}
-        </ul>
+            <li key={index} className="bg-accent/10 px-4 py-2 rounded-full text-accent text-sm">
+                {item.name}
+            </li>
+        ))}</motion.ul>
         {/* Border */}
-        <div className="border border-white/20"></div>
+        <div className="h-[1px] bg-gradient-to-r from-accent/50 to-transparent my-8"></div>
         {/* buttons */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-6">
             {/* live project button */}
         <Link href={project.live}>
         <TooltipProvider delayDuration={100}>
         <Tooltip>
-        <TooltipTrigger className="w-[50px] h-[50px] rounded-full bg-white/5 flex justify-center items-center group">
-            <BsArrowUpRight className="text-white text-3xl group-hover:text-accent" />
+        <TooltipTrigger className="w-[60px] h-[60px] rounded-full bg-white/5 border border-white/10 hover:border-accent/50 hover:bg-black/30 flex justify-center items-center group transition-all duration-300">
+            <BsArrowUpRight className="text-2xl text-white group-hover:text-accent group-hover:scale-110 transition-all duration-300" />
         </TooltipTrigger>
-        <TooltipContent>
+        <TooltipContent side="top" className="bg-black/90 text-white px-4 py-2 text-sm border-accent/20">
             <p>Live project</p>
         </TooltipContent>
         </Tooltip>
@@ -114,10 +141,10 @@ className="min-h-[80vh] flex flex-col justify-center py-12 xl:px-0"
         <Link href={project.github}>
         <TooltipProvider delayDuration={100}>
         <Tooltip>
-        <TooltipTrigger className="w-[50px] h-[50px] rounded-full bg-white/5 flex justify-center items-center group">
-            <BsGithub className="text-white text-3xl group-hover:text-accent" />
+        <TooltipTrigger className="w-[60px] h-[60px] rounded-full bg-white/5 border border-white/10 hover:border-accent/50 hover:bg-black/30 flex justify-center items-center group transition-all duration-300">
+            <BsGithub className="text-2xl text-white group-hover:text-accent group-hover:scale-110 transition-all duration-300" />
         </TooltipTrigger>
-        <TooltipContent>
+        <TooltipContent side="top" className="bg-black/90 text-white px-4 py-2 text-sm border-accent/20">
             <p>Github repository</p>
         </TooltipContent>
         </Tooltip>
@@ -127,36 +154,35 @@ className="min-h-[80vh] flex flex-col justify-center py-12 xl:px-0"
         </div>
         </div>
         </div>
-        <div className="w-full xl:w-[50%]">
+        <div className="w-full xl:w-[50%] relative">
         <Swiper
         spaceBetween={30}
         slidesPerView={1}
-        className="xl:h[520px] mb-12"
+        className="h-[520px] rounded-2xl overflow-hidden"
         onSlideChange={handleSlideChange}
         >
             {projects.map((project, index)=> {
             return ( 
-            <SwiperSlide key={index}className="w-full">
-            <div className="h-[460px] relative group flex justify-center 
-            items-center bg-pink-50/20">
+            <SwiperSlide key={index} className="w-full">
+            <div className="relative w-full h-full group">
             {/* overlay */}
-            <div className="absolute top-0 botton-0 w-full h-full bg-black/1- z-10"></div>
+            <div className="absolute inset-0 bg-black/50 group-hover:bg-black/20 transition-all duration-500 z-10"></div>
             {/* image */}
-            <div className="relative w-full h-full">
             <Image 
-            src={project.image} 
-            fill 
-            className="object-cover"
-            alt="" 
+                src={project.image} 
+                fill 
+                className="object-cover object-top group-hover:scale-105 transition-all duration-500"
+                alt={project.title}
+                priority 
             />
-            </div>
             </div>
             </SwiperSlide>
             );
             })}
             {/* buttons */}
-            <WorkSliderBtns containerStyles="flex gap-2 absolute right-0 bottom-[calc(50%_-_22px)] xl:bottom-0 z-20 w-full justify-between xl:w-max xl:justify-none"
-            btnStyles="bg-transparent hover:bg-transparent text-primary text-[22px] w-[44px] h-[44px] flex justify-center items-center transition-all"
+            <WorkSliderBtns 
+                containerStyles="flex gap-4 absolute bottom-6 right-6 z-20" 
+                btnStyles="w-[50px] h-[50px] flex justify-center items-center rounded-full bg-black/30 backdrop-blur-sm border border-white/10 hover:border-accent/50 text-white/80 hover:text-accent transition-all duration-300"
             />
         </Swiper>
         </div>
